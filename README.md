@@ -1,73 +1,55 @@
-ZCoin integration/staging tree
-================================
+Linux Build Instructions and Notes
+==================================
 
-https://zcoin.io/
+Dependencies
+----------------------
+1.  Update packages
 
- Copyright (c) 2009 - 2016 Bitcoin Developers
- 
- Copyright (c) 2015 - 2017 ZCoin Developers
+        sudo apt-get update
 
-What is ZCoin?
-----------------
+2.  Install required packagages
 
-ZCoin is the implementation of the Zerocoin protocol ( http://zerocoin.org ) guaranteeing true financial anonymity.
+        sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev
 
- - 10 minute block targets
- - 21 million total coins
- - 50 coins per block
- - Retarget using BRNDF every 6 blocks
+3.  Install Berkeley DB 4.8
 
-For more information, as well as an immediately useable, binary version of
-the zcoin client sofware, see https://github.com/ZCoinOfficial/zcoin/releases.
+        sudo apt-get install software-properties-common
+        sudo add-apt-repository ppa:bitcoin/bitcoin
+        sudo apt-get update
+        sudo apt-get install libdb4.8-dev libdb4.8++-dev
 
-License
--------
+4.  Install QT 5
 
-ZCoin is released under the terms of the MIT license. See `COPYING` for more
-information or see http://opensource.org/licenses/MIT.
+        sudo apt-get install libminiupnpc-dev libzmq3-dev
+        sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev
 
-Development process
--------------------
+Build
+----------------------
+1.  Clone the source:
 
-Developers work in their own trees, then submit pull requests when they think
-their feature or bug fix is ready.
+        git clone https://github.com/zcoinofficial/zcoin
 
-If it is a simple/trivial/non-controversial change, then one of the zcoin
-development team members simply pulls it.
+2.  Build Zcoin-core:
 
-If it is a *more complicated or potentially controversial* change, then the patch
-submitter will be asked to start a discussion (if they haven't already) on the
-[Slack : ZCoin General Channel](https://zcoinofficial.slack.com). You can get invite from here http://invite.zcoin.io:3000/
+    Configure and build the headless zcoin binaries as well as the GUI (if Qt is found).
 
-The patch will be accepted if there is broad consensus that it is a good thing.
-Developers should expect to rework and resubmit patches if the code doesn't
-match the project's coding conventions (see `doc/coding.txt`) or are
-controversial.
+    You can disable the GUI build by passing `--without-gui` to configure.
+        
+        ./autogen.sh
+        ./configure
+        make
 
-The `master` branch is regularly built and tested, but is not guaranteed to be
-completely stable. [Tags](https://github.com/zcoinofficial/zcoin/tags) are created
-regularly to indicate new official, stable release versions of ZCoin.
+3.  It is recommended to build and run the unit tests:
 
-Testing
--------
+        make check
 
-### Automated Testing
 
-Developers are strongly encouraged to write unit tests for new code, and to
-submit new unit tests for old code.
+Mac OS X Build Instructions and Notes
+=====================================
+See (doc/build-osx.md) for instructions on building on Mac OS X.
 
-Unit tests for the core code are in `src/test/`. To compile and run them:
 
-    cd src; make -f makefile.unix test
 
-Unit tests for the GUI code are in `src/qt/test/`. To compile and run them:
-
-    qmake BITCOIN_QT_TEST=1 -o Makefile.test zcoin.pro
-    make -f Makefile.test
-    ./zcoin-qt_test
-
-Installation
--------
-
-Please see details in Wiki section
-
+Windows (64/32 bit) Build Instructions and Notes
+=====================================
+See (doc/build-windows.md) for instructions on building on Windows 64/32 bit.

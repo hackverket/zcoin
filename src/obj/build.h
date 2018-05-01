@@ -1,2 +1,1 @@
-// No build information available
-#define BUILD_DATE "2017-02-18 17:20:16 -0800"
+#define BUILD_SUFFIX 0246ef0-unk
